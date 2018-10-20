@@ -15,7 +15,7 @@ import dataStruct.SeqList;
  */
 public class AdjMatGraph {
     //表示两节点之前没有连线，权值为无穷大量
-    private static final double infinity = Double.NEGATIVE_INFINITY;
+    private static final double infinity = Double.POSITIVE_INFINITY;
     //表示矩阵对角线上的节点，权值为0
     private static final double zero = 0.0;
     private SeqList vertices;//存储节点的顺序表
@@ -116,6 +116,24 @@ public class AdjMatGraph {
             graph.insertEdge(con.getRow(), con.getCol(), con.getWeight());
         } 
     }
+    //非连通图的深度优先搜索遍历
+    public void depthFirstSearch( Visit vs )throws Exception{
+        boolean[] visited = new boolean[getNumOfVertices()];
+        for( int i=0 ; i<getNumOfVertices() ; i++ ) 
+            visited[i]=false;
+        for( int i=0 ; i<getNumOfVertices() ; i++ )
+            if( !visited[i] )
+                depthFirstSearch(i, visited, vs);
+    }
+    //非连通图的广度优先搜索遍历
+    public void broadFirstSearch( Visit vs )throws Exception{
+        boolean[] visited = new boolean[getNumOfVertices()];
+        for( int i=0 ; i<getNumOfVertices() ; i++ ) 
+            visited[i]=false;
+        for( int i=0 ; i<getNumOfVertices() ; i++ )
+            if( !visited[i] )
+                broadFirstSearch(i, visited, vs);
+    }
     //连通图(从任意一个顶点出发，总能访问图的所有节点)的深度优先搜索遍历
     //1 访问节点v，并标记节点v已访问
     //2 查找节点v的第一个邻接节点w
@@ -151,6 +169,6 @@ public class AdjMatGraph {
                 w = getNextNeighbor(u, w);
             }
         }
-        
     }
+    
 }
